@@ -1,7 +1,7 @@
 import numpy as np
 
 def score(array: np.ndarray) -> int:
-    '''Quantitatively evaluate the sortedness of a np.ndarray.
+    '''Quantitatively evaluate the sortedness of a one-dimensional np.ndarray.
 
     More positive scores are given to arrays in ascending order;
     More negative scores are given to arrays in descending order.
