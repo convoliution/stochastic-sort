@@ -49,6 +49,6 @@ def score(array: np.ndarray) -> int:
     sortedness = 0
     for i in range(array.size):
         [left, n, right] = np.split(array, [i, i+1])
-        score += np.sign(n - left).sum()
-        score -= np.sign(n - right).sum()
+        sortedness += np.sign(n - left).sum()
+        sortedness -= np.sign(n - right).sum()
     return sortedness
