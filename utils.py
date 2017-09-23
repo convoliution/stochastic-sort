@@ -7,7 +7,7 @@ def isSorted(array: np.ndarray) -> bool:
         array: Array to be evaluated.
 
     Returns:
-        Score earned by `array`.
+        True is `array` is sorted; False if not.
 
     Raises:
         TypeError: If `array` is of a type other than np.ndarray.
