@@ -19,7 +19,7 @@ def isSorted(array: np.ndarray) -> bool:
     if array.ndim != 1:
         raise ValueError("argument must be of dimension 1")
 
-    for i in range(array.size - 1):
+    for i in range(array.size-1):
         if array[i] > array[i+1]:
             return False
     return True
