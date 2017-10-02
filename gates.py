@@ -22,7 +22,10 @@ def relu(x: np.ndarray) -> np.ndarray:
         Result of the ReLU function.
 
     '''
-    return np.array([0.0 if n < 0.0 else n for n in x])
+    orig_shape = x.shape
+    x = x.flatten()
+
+    return (np.array([0.0 if n < 0.0 else n for n in x])).reshape(orig_shape)
 
 def dsigmoid(grad: np.ndarray, out: np.ndarray) -> np.ndarray:
     '''Calculates the gradient on a sigmoid unit.
