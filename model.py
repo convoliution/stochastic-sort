@@ -4,14 +4,6 @@ import numpy as np
 import utils
 import gates
 
-###################################
-#                                 #
-#     W1         W2               #
-#      \          \               #
-#   x-(*)-(ReLU)-(*)-(sigmoid)->  #
-#                                 #
-###################################
-
 class StochasticSorter:
     def __init__(self,
                  D: int,
