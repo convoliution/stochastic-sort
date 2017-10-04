@@ -23,7 +23,7 @@ def isSorted(array: np.ndarray) -> bool:
             return False
     return True
 
-def score(array: np.ndarray) -> int:
+def score(array: np.ndarray) -> float:
     '''Quantitatively evaluate the sortedness of a np.ndarray.
 
     More positive scores are given to arrays in ascending order;
