@@ -27,30 +27,28 @@ def relu(x: np.ndarray) -> np.ndarray:
 
     return (np.array([0.0 if n < 0.0 else n for n in x])).reshape(orig_shape)
 
-def dsigmoid(grad: np.ndarray, out: np.ndarray) -> np.ndarray:
-    '''Calculates the gradient on a sigmoid unit.
+def dsigmoid(dout: np.ndarray, out: np.ndarray) -> np.ndarray:
+    '''Calculates the doutient on a sigmoid unit.
 
     Args:
-        grad: Gradient being backpropogated into the sigmoid unit.
+        dout: Gradient being backpropogated into the sigmoid unit.
         out: Original output of the sigmoid unit.
 
     Returns:
         Gradient of the sigmoid unit.
 
     '''
-    return ((1 - out) * out) * grad
+    return ((1 - out) * out) * dout
 
-def drelu(grad: np.ndarray, out: np.ndarray) -> np.ndarray:
-    '''Calculates the gradient on a ReLU unit.
+def drelu(dout: np.ndarray, x: np.ndarray) -> np.ndarray:
+    '''Calculates the doutient on a ReLU unit.
 
     Args:
-        grad: Gradient being backpropogated into the ReLU unit.
-        out: Original output of the ReLU unit.
+        dout: Gradient being backpropogated into the ReLU unit.
+        x: Original input of the ReLU unit.
 
     Returns:
         Gradient of the ReLU unit.
 
     '''
-    prop_grad = grad
-    prop_grad[out <= 0] = 0
-    return prop_grad
+    return dout*(x > 0)
