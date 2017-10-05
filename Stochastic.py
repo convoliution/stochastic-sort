@@ -24,6 +24,7 @@ class Sorter:
         self.net1 = Selector(D, H, learning_rate, decay_rate, reg_weight)
         self.net2 = Selector(D, H, learning_rate, decay_rate, reg_weight)
 
+        self.score_history = []
         self.loss_history = [] # stores data loss
 
     def _data_loss(self, old_score: float, new_score: float) -> float:
@@ -40,30 +41,29 @@ class Sorter:
         return old_score - new_score
 
     def sort(self, x: np.ndarray) -> np.ndarray:
+        self.score_history = []
         self.loss_history = []
-
 
         mean = np.mean(x)
         dev = np.std(x)
         x = ((x - mean)/dev).reshape((1, x.size))
-        old_score = utils.score(x)
+        self.score_history.append(utils.score(x))
+
 
         for _ in range(50000): # hard-coded iterations is temporary for testing
             i1 = self.net1.select(x)
             i2 = self.net2.select(x)
 
             utils.swap(x, i1, i2)
-            new_score = utils.score(x)
+            self.score_history.append(utils.score(x))
 
-            data_loss = self._data_loss(old_score, new_score)
+            data_loss = self._data_loss(self.score_history[-2], self.score_history[-1])
             #print("Prediction: ({},{})".format(i1, i2))
             #print("Loss: {}".format(data_loss))
             self.loss_history.append(data_loss)
 
             self.net1.backprop(data_loss)
             self.net2.backprop(data_loss)
-
-            old_score = new_score
 
         return x*dev + mean
 
