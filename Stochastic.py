@@ -48,7 +48,7 @@ class Sorter:
         x = ((x - mean)/dev).reshape((1, x.size))
         old_score = utils.score(x)
 
-        for _ in range(50000):
+        for _ in range(50000): # hard-coded iterations is temporary for testing
             i1 = self.net1.select(x)
             i2 = self.net2.select(x)
 
