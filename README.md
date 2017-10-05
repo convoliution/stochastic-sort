@@ -33,3 +33,5 @@ For each trial, a new `Sorter` is instantiated and a new array of ten random one
 `[8 7 3 8 2 8 8 3 3 4]` -> `[8 3 2 3 8 3 4 8 8 7]`, score diff `+40`
 
 `[1 7 7 8 2 5 1 7 4 8]` -> `[1 2 1 4 5 7 7 7 8 8]`, score diff `+64`
+
+The network does have a tendency to move smaller numbers to the left and larger numbers to the right! Also due to floating point imprecision, the printed output ends up rounding some numbers down (note the extra `0`s in trials 4 and 5). This will be fixed.
