@@ -48,7 +48,7 @@ class Sorter:
         x = ((x - mean)/dev).reshape((1, x.size))
         old_score = utils.score(x)
 
-        for _ in range(5000):
+        for _ in range(50000):
             i1 = self.net1.select(x)
             i2 = self.net2.select(x)
 
@@ -169,11 +169,11 @@ class Selector:
         self.loss_history.append(loss)
         dprob = prob.copy()
         pred_mask = np.zeros_like(dprob)
-        pred_mask[0][self.pred] = 1
+        pred_mask[0][self.pred] = .1
         if loss < 0:
             dprob -= pred_mask
         else:
-            dprob -= 1 - pred_mask*2 # encourage all other options
+            dprob -= .1 - pred_mask*2 # encourage all other options
         dsig = gates.dsigmoid(dprob, prob)
         grads['W2'] = np.dot(hidd.T, dsig)
         dhidd = np.dot(dsig, self.weights['W2'].T)
