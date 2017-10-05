@@ -40,32 +40,32 @@ class Sorter:
         '''
         return old_score - new_score
 
-    def sort(self, x: np.ndarray) -> np.ndarray:
+    def sort(self, target: np.ndarray) -> np.ndarray:
         self.score_history = []
         self.loss_history = []
 
-        mean = np.mean(x)
-        dev = np.std(x)
-        x = ((x - mean)/dev).reshape((1, x.size))
-        self.score_history.append(utils.score(x))
+        indices = np.arange(target.size)
+        mean = np.mean(target)
+        dev = np.std(target)
+        x = ((target - mean)/dev).reshape((1, target.size))
 
+        self.score_history.append(utils.score(x))
 
         for _ in range(50000): # hard-coded iterations is temporary for testing
             i1 = self.net1.select(x)
             i2 = self.net2.select(x)
 
-            utils.swap(x, i1, i2)
+            utils.swap(indices, i1, i2)
+            x = x.reshape(-1)[indices].reshape((1, target.size))
             self.score_history.append(utils.score(x))
 
             data_loss = self._data_loss(self.score_history[-2], self.score_history[-1])
-            #print("Prediction: ({},{})".format(i1, i2))
-            #print("Loss: {}".format(data_loss))
             self.loss_history.append(data_loss)
 
             self.net1.backprop(data_loss)
             self.net2.backprop(data_loss)
 
-        return x*dev + mean
+        return target.reshape(-1)[indices].reshape(target.shape)
 
 class Selector:
     def __init__(self,
